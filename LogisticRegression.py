@@ -131,3 +131,20 @@ plot_roc_curve(fpr, tpr)
 # fpr, tpr, f1 = performance_metrics(y_test, y_pred) 
 # print("False positive rate: {:.2f}, True positive rate: {:.2f}, F1 SCORE: {:.2f}".format(fpr, tpr, f1))
 
+
+# For prediction
+
+list_new_data = []
+cols = ["Pregnancies" ,"Glucose" ,"BloodPressure" ,"SkinThickness" ,"Insulin" ,"BMI" ,"DiabetesPedigreeFunction" ,"Age" ,"Outcome"]
+print("Enter the data for: ")
+for i in cols[:-1]:
+    print(f"{i}: ")
+    value = eval(input())
+    list_new_data.append(value)
+
+new_data = scaler.transform(np.array([list_new_data]))
+new_prediction = model.predict(new_data)
+if(new_prediction[0]==1):
+    print("\n\n*******D I A B E T E S    D E T E C T E D **************")
+else:
+    print("*******You are in good health**********")
