@@ -30,30 +30,42 @@ y = df[target_col]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 class LogisticRegressionRAY:
+    # Constructor initialization
     def __init__(self, learning_rate=0.01, epochs=1000, verbose=False, plot_loss=False):
-      self.learning_rate = learning_rate
-      self.epochs = epochs
-      self.verbose = verbose
-      self.plot_loss = plot_loss
-      self.w = None
-      self.b = None
+      self.learning_rate = learning_rate # High learning rate = overshooting, Low learning rate = very slow convergence
+      self.epochs = epochs # Number of times to train the model
+      self.verbose = verbose # If true, print cost
+      self.plot_loss = plot_loss # If true, plot loss
+      self.w = None # Weights (w in y = wx+b)
+      self.b = None # Bias (b in y = wx+b)
     
-      self.cost_per_iteration = []
+      self.cost_per_iteration = [] # List to store cost per 1000 iterations
 
     def sigmoid(self, z):
+      # Map z into the range [0,1]
       return 1/(1+np.exp(-z))
 
     def loss(self, a, Y, m):
+      # a = sigmoid output
+      # Y = Target variable
+      # m = number of training examples
+      # Loss function
       return (-1/m)*np.sum(Y*np.log(a) + (1-Y)*np.log(1-a))
    
     def fit(self, X, Y):
+    
+      # m = number of training examples
+      # n = number of variables
       m, n = X.shape
-      #Forward propagatoin
+    
+      #Forward propagation
+      # Weights and bias initialization
+    
       self.w = np.zeros(n)
       self.b = 0
 
       for i in range(self.epochs):
-        z = np.dot(X, self.w) + self.b
+        z = np.dot(X, self.w) + self.b # Y = WX + B
         a = self.sigmoid(z)
         cost = self.loss(a, Y, m)
 
